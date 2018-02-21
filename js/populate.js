@@ -309,44 +309,58 @@ function productShopPopulate(element, product){
         element.appendChild(divCol); 
 }
 
-
+   
 function openWindows(product){
     
     var productShop = product;
     var ventana;
     var inter;
+ 
+    
+    function closeWindows(){
+        return function (){
+
+           for (var i=0; i < listWindows.length; i++){
+             listWindows[i].close();
+           }
+            
+           var cat = document.getElementById("closeWindows");
+           removeChildsElement(cat);
+        }
+    }
     
     function globalProductPopulate (){
+        var long = listWindows.length-1;
         
-        var divSct1 = ventana.document.getElementById("sct");
+        var divSct1 = listWindows[long].document.getElementById("sct");
         
-        var divCol = ventana.document.createElement("div");
+        var divCol = listWindows[long].document.createElement("div");
         divCol.setAttribute("class", "col-sm-4 col-lg-4 col-md-4");
 
-        var divThumb = ventana.document.createElement("div");
+        var divThumb = listWindows[long].document.createElement("div");
         divThumb.setAttribute("class", "thumbnail");
 
-        var divCap = ventana.document.createElement("div");
+        var divCap = listWindows[long].document.createElement("div");
         divCap.setAttribute("class", "caption");
 
-        var h4 = ventana.document.createElement("h4");
-        h4.appendChild(ventana.document.createTextNode(productShop.name));
+        var h4 = listWindows[long].document.createElement("h4");
+        h4.appendChild(listWindows[long].document.createTextNode(productShop.name));
         divCap.appendChild(h4);
 
-        var h4price = ventana.document.createElement("h4");
+        var h4price = listWindows[long].document.createElement("h4");
         h4price.setAttribute("class", "pull-right");
-        h4price.appendChild(ventana.document.createTextNode(productShop.price+" €"));
+        h4price.appendChild(listWindows[long].document.createTextNode(productShop.price+" €"));
         divCap.appendChild(h4price);
 
-        var p = ventana.document.createElement("p");
+        var p = listWindows[long].document.createElement("p");
         p.appendChild(document.createTextNode(productShop.description));
         divCap.appendChild(p);
 
-        p = ventana.document.createElement("p");
+        p = listWindows[long].document.createElement("p");
         p.appendChild(document.createTextNode("Tax: "+productShop.tax));
         divCap.appendChild(p);
 
-        p = ventana.document.createElement("p");
+        p = listWindows[long].document.createElement("p");
         p.appendChild(document.createTextNode("Stock General: "+productShop.stock));
         divCap.appendChild(p);
         
@@ -354,17 +368,27 @@ function openWindows(product){
         divCol.appendChild(divThumb);
         divSct1.appendChild(divCol);
         
-        clearInterval(inter);     
+        var cat = document.getElementById("closeWindows");
+        var a = document.createElement("a");
+        
+        removeChildsElement(cat);
+        a.setAttribute("href", "#");
+        a.setAttribute("class", "list-group-item");
+        a.appendChild(document.createTextNode("Cerrar Ventana"));
+        a.addEventListener("click", closeWindows());
+        cat.appendChild(a);
+        
+        clearInterval(inter);
     }
     
     return function (){
-        ventana = window.open("newWindows.html","NewWindows","toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+       listWindows.push(window.open("newWindows.html","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400"));
         
-        inter = setInterval(globalProductPopulate, 1000);  
+       inter = setInterval(globalProductPopulate, 500);
     }
 }
 
-
+ var listWindows = [];
  var sh = new StoreHouse();
  sh.name = "Test";
 

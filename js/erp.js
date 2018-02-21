@@ -551,3 +551,6 @@ function StoreHouse(){
 	this.addShop(defaultShop);
  
 }
+
+ var sh = new StoreHouse();
+ sh.name = "Test";
