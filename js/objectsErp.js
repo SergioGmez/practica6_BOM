@@ -68,6 +68,7 @@ function Product(serialNumberValue, nameValue, priceValue){
         var price = priceValue;
         var tax = null;
         var images = [];
+        var stockGen = 0;
 
         Object.defineProperty(this, 'serialNumber', {
             get:function(){
@@ -125,6 +126,16 @@ function Product(serialNumberValue, nameValue, priceValue){
             get:function(){
                 return images;
             },		
+        });
+    
+        Object.defineProperty(this, 'stockGen', {
+            get:function(){
+                return stockGen;
+            },
+            set:function(value){
+                if (value === undefined || value === '') throw new EmptyValueException("stockGen");	
+                stockGen = value;
+            }		
         });
 
 }

@@ -361,7 +361,7 @@ function openWindows(product){
         divCap.appendChild(p);
 
         p = listWindows[long].document.createElement("p");
-        p.appendChild(document.createTextNode("Stock General: "+productShop.stock));
+        p.appendChild(document.createTextNode("Stock General: "+productShop.stockGen));
         divCap.appendChild(p);
         
         divThumb.appendChild(divCap);
